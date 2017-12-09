@@ -60,6 +60,12 @@ namespace AdventOfCode
             // Part two: 25071947
             Console.WriteLine($"Day five: \n{dayFive.Output}\n");
 
+            DaySix daySix = new DaySix(Constants.DAY_SIX_INPUT);
+
+            // Part one: 12841
+            // Part two: 8038
+            Console.WriteLine($"Day six: \n{daySix.Output}\n");
+
             Console.ReadKey();
         }
     }

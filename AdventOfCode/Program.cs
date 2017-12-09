@@ -54,6 +54,12 @@ namespace AdventOfCode
             // Part two: 208
             Console.WriteLine($"Day four: \n{dayFour.Output}\n");
 
+            DayFive dayFive = new DayFive(Constants.DAY_FIVE_INPUT);
+
+            // Part one: 343364
+            // Part two: 25071947
+            Console.WriteLine($"Day five: \n{dayFive.Output}\n");
+
             Console.ReadKey();
         }
     }

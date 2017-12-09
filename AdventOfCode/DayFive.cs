@@ -27,51 +27,57 @@ namespace AdventOfCode
 
     #endregion
 
-    public class DayFour : Day
+    public class DayFive : Day
     {
-        public DayFour(string input) : base(input)
+        public DayFive(string input) : base(input)
         {
         }
 
         protected override string PartOne()
         {
-            string[] phrases = this.Input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
-            int sum = phrases.
-                Select(phrase => phrase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).ToList()).
-                Count(words => words.Distinct().Count() == words.Count);
+            int steps = 0;
+            int nextJump = 0;
 
-            return sum.ToString();
+            int[] jumpList = this.Input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).
+                Select(int.Parse).
+                ToArray();
+
+            while (nextJump < jumpList.Length)
+            {
+                nextJump += jumpList[nextJump]++;
+                steps++;
+            }
+
+            return steps.ToString();
         }
 
         protected override string PartTwo()
         {
-            // This one is backwards. Count invalid, then subtract it from total.
-            int sum = 0;
+            int steps = 0;
+            int nextJump = 0;
 
-            string[] phrases = this.Input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
+            int[] jumpList = this.Input.Split(new[] { '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries).
+                Select(int.Parse).
+                ToArray();
 
-            foreach (string phrase in phrases)
+            while (nextJump < jumpList.Length)
             {
-                string[] words = phrase.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                int currentIndex = nextJump;
+                nextJump += jumpList[nextJump];
 
-                for (int x = 0; x < words.Length - 1; x++)
+                if (jumpList[currentIndex] >= 3)
                 {
-                    for (int y = x + 1; y < words.Length; y++)
-                    {
-                        string strX = string.Concat(words[x].OrderBy(c => c));
-                        string strY = string.Concat(words[y].OrderBy(c => c));
-
-                        if (strX == strY)
-                        {
-                            sum++;
-                            x += words.Length;
-                            break;
-                        }
-                    }
+                    jumpList[currentIndex]--;
                 }
+                else
+                {
+                    jumpList[currentIndex]++;
+                }
+
+                steps++;
             }
 
-            return (phrases.Length - sum).ToString();
+            return steps.ToString();
         }
     }
 }
